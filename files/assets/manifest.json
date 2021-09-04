@@ -1,0 +1,8 @@
+{
+  "name": "Vidya Cafe",
+  "short_name": "vidya.cafe",
+  "start_url": "https://vidya.cafe",
+  "display": "standalone",
+  "background_color": "#ADD8E6",
+  "description": "Your taste in gaming"
+}

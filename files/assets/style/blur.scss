@@ -1,0 +1,69 @@
+// Colors
+
+$primary: #47a3ff;
+$secondary: #1f84d7;
+$accent: #86b9ec;
+$dark: #2B353D;
+$danger: #E53E3E;
+$white: #E1E1E1;
+$black: #CFCFCF;
+$light: #000000;
+$success: #38A169;
+$muted: #E1E1E1;
+$info: #168EEA;
+
+$purple: #47a3ff;
+$red: #E53E3E;
+$gray: #2B353D;
+$green: #38A169;
+//HSB hue 210 saturation 30 brightness from 0 incremented by 4 each time
+//"front" UI: $gray-200
+//"background" UI: $gray-500
+//search boxes, buttons, ect.: $gray-700 -> $gray-600 on hover
+$gray-100: #394552;
+$gray-200: #323C47;
+$gray-300: #2B353D;
+$gray-400: #242C33;
+$gray-500: rgba(#1C2229, 0.5);
+$gray-600: rgba(#151A1F, 0.7);
+$gray-700: rgba(#0E1114, 0.5);
+$gray-800: #07090A;
+$gray-900: #000000;
+
+$upvote: #47a3ff;
+$downvote: #38B2AC;
+$admin: #47a3ff;
+$banned: #960000;
+$deleted: #969600;
+$deletedandbanned: #964000;
+$mod: #07c20c;
+$code: #e83e8c;
+
+$gold: #ECC94B;
+$reddit: #ED4630;
+
+//$border-color: #2E2F2F;
+$border-color: #1C2229;
+$border-width: 4px;
+
+@import "./node_modules/bootstrap/scss/bootstrap.scss";
+@import "./main.scss"; 
+
+.card-blank, .card, .comment-section, .navbar, .btn, .page-item, .nav, .info-popup {
+	backdrop-filter: blur(10px);
+}
+
+.comment.collapsed .comment-collapse::before {
+	color: $primary !important;
+}
+.dropdown-menu {
+	background-color: #151A1F;
+}
+#actual-comments {
+	background: transparent !important;
+	backdrop-filter: none;
+}
+
+*:not(.comment-collapse-desktop):not(.comment) {
+	border: none !important;
+}
