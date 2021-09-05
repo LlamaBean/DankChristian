@@ -1,8 +1,8 @@
 {
-  "name": "Vidya Cafe",
-  "short_name": "vidya.cafe",
-  "start_url": "https://vidya.cafe",
+  "name": "Dank Christian",
+  "short_name": "DankChristian",
+  "start_url": "https://dankchristian.com",
   "display": "standalone",
-  "background_color": "#ADD8E6",
-  "description": "Your taste in gaming"
+  "background_color": "#B872F2",
+  "description": "Christian memes and discussion"
 }
