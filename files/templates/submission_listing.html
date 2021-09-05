@@ -28,7 +28,7 @@
 		<div class="voting my-2 d-none d-md-block pr-2">
 			{% if v and request.path.startswith('/@') and v.admin_level == 0 %}
 
-			<span id="post-score-{{p.id}}" class="score post-score-{{p.id}} {% if voted==1 %}score-up{% endif %}"{% if not p.is_banned %} data-toggle="tooltip" data-placement="right" data-original-title="{{ups}} Sips"{% endif %}>{{score}}</span>
+			<span id="post-score-{{p.id}}" class="score post-score-{{p.id}} {% if voted==1 %}score-up{% endif %}"{% if not p.is_banned %} data-toggle="tooltip" data-placement="right" data-original-title="{{ups}} Denarii"{% endif %}>{{score}}</span>
 
 			{% if voted==1 %}
 			<div class="mx-auto arrow-up post-{{p.id}}-up active"></div>
@@ -37,11 +37,11 @@
 			{% elif v %}
 			<div id="post-{{p.id}}-up" tabindex="0" data-id-up="{{p.id}}" data-content-type="post" class="mx-auto arrow-up upvote-button post-{{p.id}}-up {% if voted==1 %}active{% endif %}"></div>
 			
-			<span id="post-score-{{p.id}}" class="score post-score-{{p.id}} {% if voted==1 %}score-up{% endif %}"{% if not p.is_banned %} data-toggle="tooltip" data-placement="right" data-original-title="{{ups}} Sips"{% endif %}>{{score}}</span>
+			<span id="post-score-{{p.id}}" class="score post-score-{{p.id}} {% if voted==1 %}score-up{% endif %}"{% if not p.is_banned %} data-toggle="tooltip" data-placement="right" data-original-title="{{ups}} Denarii"{% endif %}>{{score}}</span>
 
 			{% else %}
 
-			<span id="post-{{p.id}}-score-none" class="score"{% if not p.is_banned %} data-toggle="tooltip" data-placement="right" data-original-title="{{ups}} Sips"{% endif %}>{{score}}</span>
+			<span id="post-{{p.id}}-score-none" class="score"{% if not p.is_banned %} data-toggle="tooltip" data-placement="right" data-original-title="{{ups}} Denarii"{% endif %}>{{score}}</span>
 
 			<div id="post-{{p.id}}-up" tabindex="0" class="mx-auto arrow-up" onclick="location.href='/login';"></div>
 
@@ -118,7 +118,7 @@
 						{% endif %}
 						<li class="list-inline-item"><a {% if v and v.newtab %}target="_blank"{% endif %} href="{{p.permalink}}"><i class="fas fa-comment-dots"></i>{{p.comment_count}}</a></li>
 
-						<li class="list-inline-item"><a href="/sips?link={{p.fullname}}"><i class="fas fa-star"></i>Sips</a></li>
+						<li class="list-inline-item"><a href="/denarii?link={{p.fullname}}"><i class="fas fa-star"></i>Denarii</a></li>
 <!--
 						{% if v and v.id!=p.author_id %}
 							<li class="list-inline-item text-muted d-none d-md-inline-block"><a href="javascript:void(0)" data-toggle="modal" data-target="#awardModal" onclick="awardModal('/post/{{p.id}}/awards')"><i class="fas fa-gift fa-fw"></i>Give Award</a></li>
@@ -225,7 +225,7 @@
 			<li id="voting-{{p.id}}-mobile" class="voting list-inline-item d-md-none">
 
 				
-				<span id="post-score-{{p.id}}-mobile" class="score post-score-{{p.id}} {% if voted==1 %}score-up{% endif %}"{% if not p.is_banned %} data-toggle="tooltip" data-placement="top" data-original-title="{{ups}} Sips"{% endif %}>{{score}}</span>
+				<span id="post-score-{{p.id}}-mobile" class="score post-score-{{p.id}} {% if voted==1 %}score-up{% endif %}"{% if not p.is_banned %} data-toggle="tooltip" data-placement="top" data-original-title="{{ups}} Denarii"{% endif %}>{{score}}</span>
 	
 				{% if voted==1 %}
 				<span class="mr-2 arrow-up post-{{p.id}}-up active">
@@ -237,7 +237,7 @@
 			<li id="voting-{{p.id}}-mobile" class="voting list-inline-item d-md-none">
 
 				
-				<span id="post-score-{{p.id}}-mobile" class="score post-score-{{p.id}} {% if voted==1 %}score-up{% endif %}"{% if not p.is_banned %} data-toggle="tooltip" data-placement="top" data-original-title="{{ups}} Sips"{% endif %}>{{score}}</span>
+				<span id="post-score-{{p.id}}-mobile" class="score post-score-{{p.id}} {% if voted==1 %}score-up{% endif %}"{% if not p.is_banned %} data-toggle="tooltip" data-placement="top" data-original-title="{{ups}} Denarii"{% endif %}>{{score}}</span>
 
 				<span id="post-{{p.id}}-up-mobile" tabindex="0" data-id-up="{{p.id}}" data-content-type="post" class="ml-2 arrow-up upvote-button post-{{p.id}}-up {% if voted==1 %}active{% endif %}"></span>
 
@@ -245,7 +245,7 @@
 			{% else %}
 			<li id="voting-{{p.id}}-mobile" class="voting list-inline-item d-md-none">
 
-				<span id="post-score-{{p.id}}-mobile" class="score"{% if not p.is_banned %} data-toggle="tooltip" data-placement="top" data-original-title="{{ups}} Sips"{% endif %}>{{score}}</span>
+				<span id="post-score-{{p.id}}-mobile" class="score"{% if not p.is_banned %} data-toggle="tooltip" data-placement="top" data-original-title="{{ups}} Denarii"{% endif %}>{{score}}</span>
 
 				<span id="arrow-{{p.id}}-mobile-up" tabindex="0" class="mr-2 arrow-mobile-up" onclick="location.href='/login';">
 					<i class="fas fa-arrow-alt-up mx-0" aria-hidden="true"></i>
@@ -270,7 +270,7 @@
 			</div>
 			<div class="modal-body">
 				<ul class="list-group post-actions">
-					<button class="btn btn-link btn-block btn-lg text-left text-muted"><a href="/sips?link={{p.fullname}}"><i class="fas fa-star text-center text-muted mr-3"></i>Sips</a></button>					 
+					<button class="btn btn-link btn-block btn-lg text-left text-muted"><a href="/denarii?link={{p.fullname}}"><i class="fas fa-star text-center text-muted mr-3"></i>Denarii</a></button>					 
 <!--					
 					{% if v and v.id!=p.author_id %}
 						<li class="list-inline-item text-muted d-none d-md-inline-block"><a href="javascript:void(0)" data-toggle="modal" data-target="#awardModal" onclick="awardModal('/post/{{p.id}}/awards')"><i class="fas fa-gift fa-fw"></i>Give Award</a></li>

@@ -220,10 +220,10 @@
 					{% endif %}
 
 					<li class="list-inline-item d-none d-md-inline-block mr-2">
-						<span class="points" data-toggle="tooltip" data-placement="top" data-original-title="{{ups}} Sips"><span id="comment-score-{{c.id}}" class="score comment-score-{{c.id}} {% if voted==1 %}score-up{% endif %}">{{score}}</span></span>
+						<span class="points" data-toggle="tooltip" data-placement="top" data-original-title="{{ups}} Denarii"><span id="comment-score-{{c.id}}" class="score comment-score-{{c.id}} {% if voted==1 %}score-up{% endif %}">{{score}}</span></span>
 					</li>
 
-					<li class="list-inline-item text-muted d-none d-md-inline-block"><a href="/sips?link={{c.fullname}}"><i class="fas fa-star"></i>Sips</a></li>
+					<li class="list-inline-item text-muted d-none d-md-inline-block"><a href="/denarii?link={{c.fullname}}"><i class="fas fa-star"></i>Denarii</a></li>
 
 					{% if v and c.id in v.saved_comment_idlist() %}
 						<li class="list-inline-item text-muted d-none d-md-inline-block"><a href="javascript:void(0)" onclick="post('/unsave_comment/{{c.id}}', function(){window.location.reload(true);})"><i class="fas fa-save"></i>Unsave</a></li>
@@ -308,7 +308,7 @@
 						<li id="comment-{{c.id}}-up" tabindex="0" class="list-inline-item arrow-up d-inline-block d-md-none mr-2" onclick="location.href='/login';"></li>
 					{% endif %}
 					
-					<li class="list-inline-item d-inline-block d-md-none mr-2"><span class="points" data-toggle="tooltip" data-placement="top" data-original-title="{{ups}} Sips"><span id="comment-score-{{c.id}}" class="score comment-score-{{c.id}} {% if voted==1 %}score-up{% endif %}">{{score}}</span></span></li>
+					<li class="list-inline-item d-inline-block d-md-none mr-2"><span class="points" data-toggle="tooltip" data-placement="top" data-original-title="{{ups}} Denarii"><span id="comment-score-{{c.id}}" class="score comment-score-{{c.id}} {% if voted==1 %}score-up{% endif %}">{{score}}</span></span></li>
 				</ul>
 			</div>
 			{% endif %}
@@ -381,7 +381,7 @@
 			<div class="modal-body">
 				<ul class="list-group comment-actions">
 
-					<li class="list-group-item"><a href="/sips?link={{c.fullname}}"><i class="fas fa-star"></i>Sips</a></li>
+					<li class="list-group-item"><a href="/denarii?link={{c.fullname}}"><i class="fas fa-star"></i>Denarii</a></li>
 
 					{% if v and c.id in v.saved_comment_idlist() %}
 						<li class="list-group-item"><a href="javascript:void(0)" onclick="post('/unsave_comment/{{c.id}}', function(){window.location.reload(true);})"><i class="fas fa-save"></i>Unsave</a></li>

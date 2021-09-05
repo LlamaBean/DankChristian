@@ -36,7 +36,7 @@ services:
       - COMMENT_SPAM_COUNT_THRESHOLD=5
       - READ_ONLY=0
       - BOT_DISABLE=0
-      - COINS_NAME=Sips
+      - COINS_NAME=Denarii
     links:
       - "redis"
       - "postgres"
