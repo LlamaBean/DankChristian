@@ -99,7 +99,7 @@ class Submission(Base, Stndrd, Age_times, Scores):
 	@property
 	@lazy
 	def score(self): 
-		return self.upvotes # just sips for now, this needs to change when adding reactions
+		return self.upvotes # just denarii for now, this needs to change when adding reactions
 
 	@property
 	@lazy

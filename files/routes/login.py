@@ -348,11 +348,11 @@ def sign_up_post(v):
 	g.db.add(new_user)
 	g.db.commit()
 
-	# give a beta badge
-	beta_badge = Badge(user_id=new_user.id,
+	# give an alpha badge
+	alpha_badge = Badge(user_id=new_user.id,
 					   badge_id=6)
 
-	g.db.add(beta_badge)
+	g.db.add(alpha_badge)
 
 	# check alts
 
