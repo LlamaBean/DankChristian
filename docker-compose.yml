@@ -14,7 +14,7 @@ services:
       - MASTER_KEY=${MASTER_KEY:-KTVciAUQFpFh2WdJ/oiHJlxl6FvzRZp8kYzAAv3l2OA=}
       - DOMAIN=localhost
       - IMGUR_KEY=vcxvdfgfc6r554etrgd
-      - SITE_NAME=DankChristian
+      - SITE_NAME=DankChristian.com
       - CLOUDFLARE_ZONE=vcxvdfgfc6r554etrgd
       - CLOUDFLARE_KEY=vcxvdfgfc6r554etrgd
       - MAILGUN_KEY=vcxvdfgfc6r554etrgd

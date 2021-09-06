@@ -22,7 +22,10 @@ def banaward_trigger(post=None, comment=None):
             send_notification(
                 1,
                 author,
-                f"Your account has been suspended for a day for {link}. It sucked and you should feel bad.",
+                f"""
+                Your account has been suspended for a day for {link}. 
+                Please review our rules to avoid breaking them again.
+                """,
             )
         elif author.unban_utc > 0:
             author.unban_utc += 24 * 60 * 60
@@ -31,7 +34,9 @@ def banaward_trigger(post=None, comment=None):
             send_notification(
                 1,
                 author,
-                f"Your account has been suspended for yet another day for {link}. Seriously man?",
+                f"""
+                Your account has been suspended for yet another day for {link}. 
+                A third violation may result in a permanent ban.""",
             )
 
 

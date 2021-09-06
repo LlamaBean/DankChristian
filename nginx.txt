@@ -1,5 +1,5 @@
 server {
-        server_name vidya.cafe;
+        server_name DankChristian;
 
         client_max_body_size 64m;
 

@@ -10,13 +10,6 @@ AWARDS = {
         "icon": "fas fa-gavel",
         "color": "text-danger",
     },
-    "shit": {
-        "kind": "shit",
-        "title": "Literal Shitpost",
-        "description": "Let OP know how much their post sucks ass. Flies will swarm their idiotic post. (flies only work on posts lol!!)",
-        "icon": "fas fa-poop",
-        "color": "text-black-50",
-    },
 }
 
 
