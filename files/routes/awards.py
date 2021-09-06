@@ -9,27 +9,35 @@ from flask import g, request
 def banaward_trigger(post=None, comment=None):
 
     author = post.author if post else comment.author
-    link = f"[this post]({post.permalink})" if post else f"[this comment]({comment.permalink})"
+    link = (
+        f"[this post]({post.permalink})"
+        if post
+        else f"[this comment]({comment.permalink})"
+    )
 
     if author.admin_level < 1:
         if not author.is_suspended:
             author.ban(reason="1-day ban award used", days=1)
 
-            send_notification(1, author, f"Your account has been suspended for a day for {link}. It sucked and you should feel bad.")
+            send_notification(
+                1,
+                author,
+                f"Your account has been suspended for a day for {link}. It sucked and you should feel bad.",
+            )
         elif author.unban_utc > 0:
-            author.unban_utc += 24*60*60
+            author.unban_utc += 24 * 60 * 60
             g.db.add(author)
 
-            send_notification(1, author, f"Your account has been suspended for yet another day for {link}. Seriously man?")
+            send_notification(
+                1,
+                author,
+                f"Your account has been suspended for yet another day for {link}. Seriously man?",
+            )
 
 
-ACTIONS = {
-    "ban": banaward_trigger
-}
+ACTIONS = {"ban": banaward_trigger}
 
-ALLOW_MULTIPLE = (
-    "ban",
-)
+ALLOW_MULTIPLE = ("ban",)
 
 
 @app.get("/awards")
@@ -40,7 +48,9 @@ def get_awards(v):
 
     user_awards = v.awards
     for val in return_value:
-        val['owned'] = len([x for x in user_awards if x.kind == val['kind'] and not x.given])
+        val["owned"] = len(
+            [x for x in user_awards if x.kind == val["kind"] and not x.given]
+        )
 
     return jsonify(return_value)
 
@@ -58,14 +68,18 @@ def award_post(pid, v):
     if kind not in AWARDS:
         return {"error": "That award doesn't exist."}, 404
 
-    post_award = g.db.query(AwardRelationship).filter(
-        and_(
-            AwardRelationship.kind == kind,
-            AwardRelationship.user_id == v.id,
-            AwardRelationship.submission_id == None,
-            AwardRelationship.comment_id == None
+    post_award = (
+        g.db.query(AwardRelationship)
+        .filter(
+            and_(
+                AwardRelationship.kind == kind,
+                AwardRelationship.user_id == v.id,
+                AwardRelationship.submission_id == None,
+                AwardRelationship.comment_id == None,
+            )
         )
-    ).first()
+        .first()
+    )
 
     if not post_award:
         return {"error": "You don't have that award."}, 404
@@ -78,19 +92,25 @@ def award_post(pid, v):
     if post.author_id == v.id:
         return {"error": "You can't award yourself."}, 403
 
-    existing_award = g.db.query(AwardRelationship).filter(
-        and_(
-            AwardRelationship.submission_id == post.id,
-            AwardRelationship.user_id == v.id,
-            AwardRelationship.kind == kind
+    existing_award = (
+        g.db.query(AwardRelationship)
+        .filter(
+            and_(
+                AwardRelationship.submission_id == post.id,
+                AwardRelationship.user_id == v.id,
+                AwardRelationship.kind == kind,
+            )
         )
-    ).first()
+        .first()
+    )
 
     if existing_award and kind not in ALLOW_MULTIPLE:
-        return {"error": "You can't give that award multiple times to the same post."}, 409
+        return {
+            "error": "You can't give that award multiple times to the same post."
+        }, 409
 
     post_award.submission_id = post.id
-    #print(f"give award to pid {post_award.submission_id} ({post.id})")
+    # print(f"give award to pid {post_award.submission_id} ({post.id})")
     g.db.add(post_award)
 
     msg = f"@{v.username} has given your [post]({post.permalink}) the {AWARDS[kind]['title']} Award!"
@@ -120,14 +140,18 @@ def award_comment(cid, v):
     if kind not in AWARDS:
         return {"error": "That award doesn't exist."}, 404
 
-    comment_award = g.db.query(AwardRelationship).filter(
-        and_(
-            AwardRelationship.kind == kind,
-            AwardRelationship.user_id == v.id,
-            AwardRelationship.submission_id == None,
-            AwardRelationship.comment_id == None
+    comment_award = (
+        g.db.query(AwardRelationship)
+        .filter(
+            and_(
+                AwardRelationship.kind == kind,
+                AwardRelationship.user_id == v.id,
+                AwardRelationship.submission_id == None,
+                AwardRelationship.comment_id == None,
+            )
         )
-    ).first()
+        .first()
+    )
 
     if not comment_award:
         return {"error": "You don't have that award."}, 404
@@ -135,21 +159,29 @@ def award_comment(cid, v):
     c = g.db.query(Comment).filter_by(id=cid).first()
 
     if not c or c.is_banned or c.deleted_utc > 0:
-        return {"error": "That comment doesn't exist or has been deleted or removed."}, 404
+        return {
+            "error": "That comment doesn't exist or has been deleted or removed."
+        }, 404
 
     if c.author_id == v.id:
         return {"error": "You can't award yourself."}, 403
 
-    existing_award = g.db.query(AwardRelationship).filter(
-        and_(
-            AwardRelationship.comment_id == c.id,
-            AwardRelationship.user_id == v.id,
-            AwardRelationship.kind == kind
+    existing_award = (
+        g.db.query(AwardRelationship)
+        .filter(
+            and_(
+                AwardRelationship.comment_id == c.id,
+                AwardRelationship.user_id == v.id,
+                AwardRelationship.kind == kind,
+            )
         )
-    ).first()
+        .first()
+    )
 
     if existing_award and kind not in ALLOW_MULTIPLE:
-        return {"error": "You can't give that award multiple times to the same comment."}, 409
+        return {
+            "error": "You can't give that award multiple times to the same comment."
+        }, 409
 
     comment_award.comment_id = c.id
     g.db.add(comment_award)
@@ -167,6 +199,7 @@ def award_comment(cid, v):
 
     return "", 204
 
+
 @app.get("/admin/user_award")
 @auth_required
 def admin_userawards_get(v):
@@ -176,6 +209,7 @@ def admin_userawards_get(v):
 
     return render_template("admin/user_award.html", awards=list(AWARDS.values()), v=v)
 
+
 @app.post("/admin/user_award")
 @auth_required
 @validate_formkey
@@ -184,7 +218,7 @@ def admin_userawards_post(v):
     if v.admin_level < 6:
         abort(403)
 
-    u = get_user(request.form.get("username", '1'), graceful=False, v=v)
+    u = get_user(request.form.get("username", "1"), graceful=False, v=v)
 
     awards = []
     notify_awards = {}
@@ -204,11 +238,7 @@ def admin_userawards_post(v):
             for x in range(int(value)):
                 thing += 1
 
-                awards.append(AwardRelationship(
-                    id=thing,
-                    user_id=u.id,
-                    kind=key
-                ))
+                awards.append(AwardRelationship(id=thing, user_id=u.id, kind=key))
 
     g.db.bulk_save_objects(awards)
     text = "You were given the following awards:\n\n"

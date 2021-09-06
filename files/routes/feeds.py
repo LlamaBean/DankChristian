@@ -7,63 +7,71 @@ from yattag import Doc
 
 from files.__main__ import app
 
-@app.get('/rss/<sort>/<t>')
-def feeds_user(sort='hot', t='all'):
 
-	page = int(request.args.get("page", 1))
+@app.get("/rss/<sort>/<t>")
+def feeds_user(sort="hot", t="all"):
 
-	posts = frontlist(
-		sort=sort,
-		page=page,
-		t=t,
-		v=None,
-		)
+    page = int(request.args.get("page", 1))
 
-	domain = environ.get(
-	"domain", environ.get(
-		"SERVER_NAME", None)).strip()
+    posts = frontlist(
+        sort=sort,
+        page=page,
+        t=t,
+        v=None,
+    )
 
-	doc, tag, text = Doc().tagtext()
+    domain = environ.get("domain", environ.get("SERVER_NAME", None)).strip()
 
-	with tag("feed", ("xmlns:media","http://search.yahoo.com/mrss/"), xmlns="http://www.w3.org/2005/Atom",):
-		with tag("title", type="text"):
-			text(f"{sort} posts from {domain}")
+    doc, tag, text = Doc().tagtext()
 
-		doc.stag("link", href=request.url)
-		doc.stag("link", href=request.url_root)
+    with tag(
+        "feed",
+        ("xmlns:media", "http://search.yahoo.com/mrss/"),
+        xmlns="http://www.w3.org/2005/Atom",
+    ):
+        with tag("title", type="text"):
+            text(f"{sort} posts from {domain}")
 
-		for post in posts:
-			#print("POST IMAGE "+ str( post.is_image ))
-			with tag("entry", ("xml:base", request.url)):
-				with tag("title", type="text"):
-					text(post.title)
+        doc.stag("link", href=request.url)
+        doc.stag("link", href=request.url_root)
 
-				with tag("id"):
-					text(post.fullname)
+        for post in posts:
+            # print("POST IMAGE "+ str( post.is_image ))
+            with tag("entry", ("xml:base", request.url)):
+                with tag("title", type="text"):
+                    text(post.title)
 
-				if (post.edited_utc > 0):
-					with tag("updated"):
-						text(datetime.utcfromtimestamp(post.edited_utc).isoformat())
+                with tag("id"):
+                    text(post.fullname)
 
-				with tag("published"):
-					text(datetime.utcfromtimestamp(post.created_utc).isoformat())
-				
-				doc.stag("link", href=post.url)
+                if post.edited_utc > 0:
+                    with tag("updated"):
+                        text(datetime.utcfromtimestamp(post.edited_utc).isoformat())
 
-				with tag("author"):
-					with tag("name"):
-						text(post.author.username)
-					with tag("uri"):
-						text(f'https://{site}/@{post.author.username}')
+                with tag("published"):
+                    text(datetime.utcfromtimestamp(post.created_utc).isoformat())
 
-				doc.stag("link", href=full_link(post.permalink))
+                doc.stag("link", href=post.url)
 
-				image_url = post.thumb_url or post.embed_url or post.url
+                with tag("author"):
+                    with tag("name"):
+                        text(post.author.username)
+                    with tag("uri"):
+                        text(f"https://{site}/@{post.author.username}")
 
-				doc.stag("media:thumbnail", url=image_url)
+                doc.stag("link", href=full_link(post.permalink))
 
-				if len(post.body_html) > 0:
-					with tag("content", type="html"):
-						text(html.escape(f"<img src={image_url}/><br/>{post.body_html}"))
+                image_url = post.thumb_url or post.embed_url or post.url
 
-	return Response( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+ doc.getvalue(), mimetype="application/xml")
+                doc.stag("media:thumbnail", url=image_url)
+
+                if len(post.body_html) > 0:
+                    with tag("content", type="html"):
+                        text(
+                            html.escape(f"<img src={image_url}/><br/>{post.body_html}")
+                        )
+
+    return Response(
+        '<?xml version="1.0" encoding="UTF-8"?>' + doc.getvalue(),
+        mimetype="application/xml",
+    )

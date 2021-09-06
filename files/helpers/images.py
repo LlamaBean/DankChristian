@@ -10,36 +10,50 @@ IMGUR_KEY = environ.get("IMGUR_KEY").strip()
 
 
 def upload_file(file=None, resize=False, png=False):
-	
-	if file: file.save("image.gif")
 
-	if resize:
-		i = IImage.open("image.gif")
-		size = 100, 100
-		frames = ImageSequence.Iterator(i)
+    if file:
+        file.save("image.gif")
 
-		def thumbnails(frames):
-			for frame in frames:
-				thumbnail = frame.copy()
-				thumbnail.thumbnail(size, IImage.ANTIALIAS)
-				yield thumbnail
+    if resize:
+        i = IImage.open("image.gif")
+        size = 100, 100
+        frames = ImageSequence.Iterator(i)
 
-		frames = thumbnails(frames)
+        def thumbnails(frames):
+            for frame in frames:
+                thumbnail = frame.copy()
+                thumbnail.thumbnail(size, IImage.ANTIALIAS)
+                yield thumbnail
 
-		om = next(frames)
-		om.info = i.info
-		om.save("image.gif", save_all=True, append_images=list(frames), loop=0)
+        frames = thumbnails(frames)
 
-	if png: filedir = "image.png"
-	else: filedir = "image.gif"
-	try:
-		with open(filedir, 'rb') as f:
-			data={'image': base64.b64encode(f.read())} 
-			req = requests.post('https://api.imgur.com/3/upload.json', headers = {"Authorization": f"Client-ID {IMGUR_KEY}"}, data=data)
-		resp = req.json()['data']
-		url = resp['link'].replace(".png", "_d.png").replace(".jpg", "_d.jpg").replace(".jpeg", "_d.jpeg") + "?maxwidth=9999"
-	except: return
+        om = next(frames)
+        om.info = i.info
+        om.save("image.gif", save_all=True, append_images=list(frames), loop=0)
 
-	new_image = Image(text=url, deletehash=resp["deletehash"])
-	g.db.add(new_image)
-	return(url)
+    if png:
+        filedir = "image.png"
+    else:
+        filedir = "image.gif"
+    try:
+        with open(filedir, "rb") as f:
+            data = {"image": base64.b64encode(f.read())}
+            req = requests.post(
+                "https://api.imgur.com/3/upload.json",
+                headers={"Authorization": f"Client-ID {IMGUR_KEY}"},
+                data=data,
+            )
+        resp = req.json()["data"]
+        url = (
+            resp["link"]
+            .replace(".png", "_d.png")
+            .replace(".jpg", "_d.jpg")
+            .replace(".jpeg", "_d.jpeg")
+            + "?maxwidth=9999"
+        )
+    except:
+        return
+
+    new_image = Image(text=url, deletehash=resp["deletehash"])
+    g.db.add(new_image)
+    return url
