@@ -363,7 +363,7 @@ def sign_up_post(v):
 		send_verification_email(new_user)
 
 	# send welcome message
-	send_notification(1, new_user, "Welcome to DankChristian! A place for Christian memes and uncensored discussion")
+	send_notification(1, new_user, "Welcome to DankChristian! A place for Christian memes and uncensored discussion.")
 
 	session["user_id"] = new_user.id
 	session["session_id"] = token_hex(16)

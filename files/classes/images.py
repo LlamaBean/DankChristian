@@ -16,11 +16,12 @@ class Image(Base):
 		onlyfiles = next(os.walk("/assets/images/loginbackgrounds"))[2] #dir is your directory path as string
 		nFiles = len(onlyfiles)
 		pic = random.randint(1, nFiles)
-		return f"/assets/images/loginbackgrounds/bg-{pic}.png"
+		return f"/assets/images/loginbackgrounds/bg-{pic}"
 
 def random_background():
-	#change the 2nd number when adding backgrounds
-	pic = random.randint(1, 13)
+	# onlyfiles = next(os.walk("/assets/images/loginbackgrounds"))[2] #dir is your directory path as string
+	# nFiles = len(onlyfiles)
+	pic = random.randint(1, 2)
 	return f"/assets/images/loginbackgrounds/bg-{pic}"
 
 def random_image():
