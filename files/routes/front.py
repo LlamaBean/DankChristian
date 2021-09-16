@@ -106,7 +106,7 @@ def notifications(v):
 
 @cache.memoize(timeout=1500)
 def frontlist(
-    v=None, sort="hot", page=1, t="all", ids_only=True, filter_words="", **kwargs
+    v=None, sort="hot", page=1, t="all", filter_words="", **kwargs
 ):
 
     posts = (
@@ -223,11 +223,7 @@ def frontlist(
         if not (x.author and x.author.shadowbanned) or (v and v.id == x.author_id)
     ][:26]
 
-    if ids_only:
-        posts = [x.id for x in posts]
-        return posts
-    return posts
-
+    return [x.id for x in posts]
 
 @app.get("/")
 @auth_desired

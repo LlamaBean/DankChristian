@@ -5,7 +5,7 @@ from files.helpers.jinja2 import full_link
 from files.helpers.get import *
 from yattag import Doc
 
-from files.__main__ import app
+from files.helpers.get import app
 
 
 @app.get("/rss/<sort>/<t>")
@@ -13,14 +13,16 @@ def feeds_user(sort="hot", t="all"):
 
     page = int(request.args.get("page", 1))
 
-    posts = frontlist(
+    post_ids = frontlist(
         sort=sort,
         page=page,
         t=t,
         v=None,
     )
 
-    domain = environ.get("domain", environ.get("SERVER_NAME", None)).strip()
+    posts = get_posts(post_ids)
+
+    domain = app.config["SERVER_NAME"]
 
     doc, tag, text = Doc().tagtext()
 
