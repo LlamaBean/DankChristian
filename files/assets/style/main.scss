@@ -1886,9 +1886,10 @@ a.bg-dark:hover, a.bg-dark:focus, button.bg-dark:hover, button.bg-dark:focus {
     margin: 0.25rem 0 0.25rem;
     border-radius: $border-radius !important;
 }
-.card:hover {
+@media (min-width: 768px) { .card:hover {
     transform: scale(1.005);
     z-index: 1000;
+}
 }
 
 //#thread .card {
