@@ -6,7 +6,6 @@ from os import environ, path
 import secrets
 from flask import *
 from flask_caching import Cache
-from flask_limiter import Limiter
 from flask_compress import Compress
 
 
@@ -127,17 +126,7 @@ app.config["RATELIMIT_DEFAULTS_EXEMPT_WHEN"] = lambda: False
 app.config["RATELIMIT_HEADERS_ENABLED"] = True
 
 
-def limiter_key_func():
-    return request.remote_addr
 
-
-limiter = Limiter(
-    app,
-    key_func=limiter_key_func,
-    default_limits=["100/minute"],
-    headers_enabled=True,
-    strategy="fixed-window",
-)
 
 _engine = create_engine(
     app.config["DATABASE_URL"],
