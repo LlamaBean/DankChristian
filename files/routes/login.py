@@ -1,6 +1,6 @@
 from urllib.parse import urlencode
 from files.mail import *
-from files.__main__ import app, limiter
+from files.__main__ import app
 
 valid_username_regex = re.compile("^[a-zA-Z0-9_\-]{3,25}$")
 valid_password_regex = re.compile("^.{8,100}$")
@@ -48,7 +48,6 @@ def check_for_alts(current_id):
 
 
 @app.post("/login")
-@limiter.limit("6/minute")
 def login_post():
 
     username = request.form.get("username")
@@ -543,7 +542,6 @@ def lost_2fa(v):
 
 
 @app.post("/request_2fa_disable")
-@limiter.limit("6/minute")
 def request_2fa_disable():
 
     username = request.form.get("username")

@@ -10,7 +10,7 @@ from files.helpers.sanitize import *
 from files.helpers.markdown import *
 from files.mail import *
 from flask import *
-from files.__main__ import app, limiter
+from files.__main__ import app
 
 # from pusher_push_notifications import PushNotifications, PusherAuthError
 
@@ -164,7 +164,6 @@ def unsubscribe(v, post_id):
 
 
 @app.post("/@<username>/message")
-@limiter.limit("10/hour")
 @auth_required
 def message2(v, username):
 
@@ -594,7 +593,6 @@ def unfollow_user(username, v):
 
 
 @app.route("/uid/<id>/pic/profile")
-@limiter.exempt
 def user_profile_uid(id):
     try:
         id = int(id)

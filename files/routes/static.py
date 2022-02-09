@@ -1,5 +1,5 @@
 from files.mail import *
-from files.__main__ import app, limiter
+from files.__main__ import app
 from files.helpers.alerts import *
 import hashlib
 import hmac
@@ -130,7 +130,6 @@ def rules(v):
 
 
 @app.route("/assets/<path:path>")
-@limiter.exempt
 def static_service(path):
     resp = make_response(send_from_directory("./assets", path))
     if request.path.endswith(".css"):

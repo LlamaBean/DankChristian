@@ -12,7 +12,7 @@ from files.routes.front import comment_idlist
 # from pusher_push_notifications import PushNotifications, PusherAuthError
 
 from flask import *
-from files.__main__ import app, limiter
+from files.__main__ import app
 
 site = environ.get("DOMAIN").strip()
 
@@ -203,7 +203,6 @@ def post_pid_comment_cid(cid, pid=None, anything=None, v=None):
 
 
 @app.post("/comment")
-@limiter.limit("6/minute")
 @is_not_banned
 @validate_formkey
 def api_comment(v):

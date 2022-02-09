@@ -14,7 +14,7 @@ from files.helpers.discord import send_message
 from files.classes import *
 from flask import *
 from io import BytesIO
-from files.__main__ import app, limiter, cache
+from files.__main__ import app, cache
 from PIL import Image as PILimage
 from .front import frontlist
 
@@ -335,7 +335,6 @@ def edit_post(pid, v):
 
 
 @app.get("/submit/title")
-@limiter.limit("6/minute")
 @is_not_banned
 def get_post_title(v):
 
@@ -492,7 +491,6 @@ def embed_comment_cid(cid, pid=None):
 
 
 @app.post("/submit")
-@limiter.limit("6/minute")
 @is_not_banned
 @validate_formkey
 def submit_post(v):

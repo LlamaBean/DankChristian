@@ -3,7 +3,6 @@ bleach
 Flask
 Flask-Caching
 Flask-Compress
-Flask-Limiter==1.1.0
 Flask-Markdown
 gevent
 greenlet
